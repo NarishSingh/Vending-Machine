@@ -1,0 +1,119 @@
+h1 {
+    text-align: center;
+    padding-top: 5px;
+}
+
+h3 {
+    margin: 0;
+}
+
+body {
+    background-color: lightsteelblue;
+}
+
+#content-div {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+/*ITEM GRID*/
+.item-box {
+    text-align: center;
+    border: double #1b6d85;
+}
+
+.item-box:hover {
+    background-color: aliceblue;
+}
+
+/*PURCHASE SIDEBAR*/
+.form-group {
+    text-align: center;
+}
+
+textarea {
+    resize: none;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+#purchase-side-bar {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.form-inline {
+    justify-content: space-evenly;
+}
+
+.col-form-label {
+    font-weight: bold;
+    font-style: italic;
+}
+
+#item-to-buy {
+    width: 75%;
+}
+
+/*SCREEN LAYOUTS*/
+/*SM*/
+@media screen and (min-width: 576px) {
+    #content-div {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+    }
+
+    #vm-item-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(1, 3fr);
+    }
+
+    #purchase-side-bar {
+        display: grid;
+        grid-template-rows: repeat(1, 1fr);
+    }
+}
+
+/*MD*/
+@media screen and (min-width: 768px) {
+    #content-div {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+    }
+
+    #vm-item-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 3fr);
+    }
+
+    #purchase-side-bar {
+        display: grid;
+        grid-template-rows: repeat(1, 1fr);
+    }
+}
+
+/*LG/XL*/
+@media screen and (min-width: 900px) {
+    #content-div {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+    }
+
+    #vm-item-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 3fr);
+    }
+
+    #purchase-side-bar {
+        display: grid;
+        grid-template-rows: repeat(1, 1fr);
+    }
+}

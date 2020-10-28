@@ -1,0 +1,252 @@
+@startuml
+
+title Vending Machine Assessment - UML
+
+
+package m3vendingmachine {
+    class App{
+        +main()
+    }
+}
+
+package controller {
+    class VMController {
+        VMController(): void {service: VMService, view: VMView}
+        +run(): void
+        -getMenuSelection(): int
+        -buyItem(): void
+        -stockMachine():
+        +unknownCommand()
+        +exitMessage()
+    }
+}
+
+package dao {
+    class Change{
+        -PENNY_VALUE: BigDecimal
+        -NICKEL_VALUE: BigDecimal
+        -DIME_VALUE: BigDecimal
+        -QUARTER_VALUE: BigDecimal
+
+        +calculateChange(): Map<Coins, Integer> {buying: Item, cashIn: BigDecimal}
+    }
+
+    interface VMDAO{
+        +addItem(): void {snackDrink: Item}
+        +removeItem(): void {snackDrink: Item}
+        +getItem(): Item {itemName: String}
+        +getInventory(): List<Item>
+        +dispenseItemChange(): Map<Coins, Integer> {snackDrink: Item, userCashIn: BigDecimal}
+        +inventoryCount(): int
+    }
+
+    class VMDAOImpl{
+        -inventory: List<Item>
+        +INVENTORY_FILE: String
+        +DELIMITER: String
+
+        VMDAOImpl()
+        VMDAOImpl(): {inventoryTextFile: String}
+
+        +addItem(): void {snackDrink: Item}
+        +removeItem(): void {snackDrink: Item}
+        +getItem(): Item {itemName: String}
+        +getInventory(): List<Item>
+        +dispenseItemChange(): Map<Coins, Integer> {snackDrink: Item, userCashIn: BigDecimal}
+        +inventoryCount(): int
+        
+        -marshallItem(): String {anItem: Item}
+        -unmarshallItem(): Item {itemAsText: String}
+        -loadInventory()
+        -writeInventory()
+    }
+
+    VMDAO <|-down- VMDAOImpl: implements
+
+    interface VMAuditDAO{
+        +writeAuditEntry(): void {entry: String}
+    }
+
+    class VMAuditDAOImpl{
+        -AUDIT_FILE: String
+
+        +writeAuditEntry(): void {entry: String}
+    }
+
+    VMAuditDAO <|-down- VMAuditDAOImpl: implements
+
+    class VendingPersistenceException <<Exception>>{
+        VendingPersistenceException(): {message: String}
+        VendingPersistenceException(): {message: String, cause: Throwable}
+    }
+}
+
+package dto {
+    enum Coins{
+        +PENNIES
+        +NICKELS
+        +DIMES
+        +QUARTERS
+    }
+
+    class Item{
+        -name: String
+        -cost: BigDecimal
+
+        Item(): {name: String, cost: BigDecimal}
+
+        +getName(): String
+        +setName(): void {name: String}
+        +getCost(): BigDecimal
+        +setCost(): void {cost: BigDecimal}
+    }
+}
+
+package service {
+    interface VMService{
+        +stockItem(): void {snackDrink: Item]
+        +getInventory(): List<Item>
+        +getItem(): Item {itemName: String}
+        +sellItem(): Map<Coins, Integer> {snackDrink: Item, userCashIn: BigDecimal}
+    }
+
+    class VMServiceImpl{
+        -dao: VMDAO
+        -auditDAO: VMAuditDAO
+
+        VMServiceImpl(): {dao: VMDAO, auditDAO: VMAuditDAO}
+
+        +stockItem(): void {snackDrink: Item]
+        +getInventory(): List<Item>
+        +getItem(): Item {itemName: String}
+        +sellItem(): Map<Coins, Integer> {snackDrink: Item, userCashIn: BigDecimal}
+
+        -validateNewItemData(): void {item: Item}
+    }
+
+    VMService <|-down- VMServiceImpl: implements
+
+    class ItemDataValidationException <<Exception>>{
+        ItemDataValidationException(): {message: String}
+        ItemDataValidationException(): {message: String, cause: Throwable}
+    }
+
+    class InsufficientFundsException <<Exception>>{
+        InsufficientFundsException(): {message: String}
+        InsufficientFundsException(): {message: String, cause: Throwable}
+    }
+
+    class NoSuchItemExistsException <<Exception>>{
+        NoSuchItemExistsException(): {message: String}
+        NoSuchItemExistsException(): {message: String, cause: Throwable}
+    }
+}
+
+package view {
+    interface UserIO{
+        +print(): void {message: String}
+        +readString(): String {prompt: String}
+        +readInt(): int {prompt: String}
+        +readInt(): int {prompt: String, min: int, max: int}
+        +readDouble(): double {prompt: String}
+        +readDouble(): double {prompt: String, min: double, max: double}
+        +readFloat(): float {prompt: String}
+        +readFloat(): float {prompt: String, min: float, max: float}
+        +readLong(): long {prompt: String}
+        +readLong(): long {prompt: String, min: long, max: long}
+    }
+
+    class UserIOImpl{
+        -input: Scanner
+
+        +print(): void {message: String}
+        +readString(): String {prompt: String}
+        +readInt(): int {prompt: String}
+        +readInt(): int {prompt: String, min: int, max: int}
+        +readDouble(): double {prompt: String}
+        +readDouble(): double {prompt: String, min: double, max: double}
+        +readFloat(): float {prompt: String}
+        +readFloat(): float {prompt: String, min: float, max: float}
+        +readLong(): long {prompt: String}
+        +readLong(): long {prompt: String, min: long, max: long}
+    }
+
+    UserIO <|-down- UserIOImpl: implements
+
+    class VMView{
+        +io: UserIO
+        
+        VMView(): {io: UserIO}
+        
+        +mainMenuAndSelection(): int
+        +displayBuyBanner(): void
+        +displayinventoryList(): void {allItems: List<Item>}
+        +getCash(): BigDecimal
+        +getUserBuySelection: String
+        +displayBuyChangeBackSuccess()
+        +getPaydifference(): BigDecimal
+        +displayStockMachineBanner(): void
+        +getNewItemInfo(): Item
+        +displayStockMachineSuccessBanner()
+        +displayExitBanner(): void
+        +displayUnknownCommandBanner(): void
+        +displayErrorMessage: void {errorMsg: String}
+    }
+}
+
+@enduml
+
+/*----------------------------------------------------*/
+
+@startuml
+title Vending Machine - stockMachine() Sequence
+
+Controller -> View : getNewItemInfo()
+View --> Controller: Item
+
+Controller -> Service: stockItem(Item)
+Service --> Service : validateNewItemInfo(Item)
+Service -> DAO : addItem(Item)
+DAO --> Service : Item
+
+Service -> AuditDAO : writeAuditEntry()
+AuditDAO --> Service : void
+Service --> Controller : void
+
+Controller -> View : displayStockItemSuccessBanner()
+View --> Controller : void
+
+@enduml
+
+/*----------------------------------------------------*/
+
+@startuml
+title Vending Machine - buyItem() Sequence
+
+Controller -> Service : getInventory()
+Service --> Controller : inventory
+Controller -> View : displayInventory(List<Item>)
+View --> Controller : void
+
+Controller -> View : getCash()
+View --> Controller : BigDecimal
+
+Controller -> View : buying()
+View --> Controller : String
+Controller -> Service : validate with getItem()
+
+Controller -> Service : sellItem(Item, BigDecimal)
+Service -> DAO : buyItem()
+DAO --> DAO : removeItem()
+DAO --> DAO : dispenseItemChange()
+DAO --> Service : Map<Coins, Integer>
+Service --> Controller : Map<Coins, Integer>
+
+Service -> AuditDAO : writeAuditEntry()
+AuditDAO --> Service : void
+Service --> Controller : void
+
+Controller -> View : displayBuyChangeBackSuccess()
+View --> Controller : void
+
+@enduml

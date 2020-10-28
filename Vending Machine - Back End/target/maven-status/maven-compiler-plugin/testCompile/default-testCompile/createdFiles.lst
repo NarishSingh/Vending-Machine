@@ -1,0 +1,4 @@
+com\sg\m4vmv2\service\VMServiceImplTest.class
+com\sg\m4vmv2\dao\VMDAOImplTest.class
+com\sg\m4vmv2\service\VMAuditDAOImplStub.class
+com\sg\m4vmv2\service\VMDAOImplStub.class

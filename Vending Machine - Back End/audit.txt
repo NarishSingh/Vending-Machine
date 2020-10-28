@@ -1,0 +1,12 @@
+2020-06-22T11:23:27.306314300 : sellItem: Item{name=Water, cost=1.00, itemCount=22}1.50
+2020-06-22T11:31:05.745309300 : stockItem: Item{name=Fizzy Drank, cost=3.50, itemCount=50}
+2020-06-22T13:56:38.960388700 : thrown: Character c is neither a decimal digit number, decimal point, nor "e" notation exponential mark.
+2020-06-25T13:57:04.694297400 : stockItem: Item{name=Bubble Gum, cost=0.25, itemCount=10}
+2020-06-25T14:46:26.481890 : Thrown: For input string: "das"
+2020-06-25T14:46:42.459947500 : Thrown: Not enough money to buy item
+2020-06-25T14:46:47.614849700 : sellItem: Item{name=Fizzy Drank, cost=3.50, itemCount=49}4.00
+2020-06-25T14:46:51.264182 : Thrown: For input string: "asd"
+2020-06-25T17:35:57.522506100 : sellItem: Item{name=Water, cost=1.00, itemCount=19}1.00
+2020-06-25T17:37:33.264100200 : Thrown: For input string: "fndkjfnskf"
+2020-06-25T17:40:17.057410500 : Thrown: Not enough money to buy item
+2020-06-25T17:40:41.995892300 : sellItem: Item{name=Apple, cost=0.50, itemCount=22}1.10

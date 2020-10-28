@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.sg.m4vmv2.service.VMServiceImplTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.559 s - in com.sg.m4vmv2.service.VMServiceImplTest

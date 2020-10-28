@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.sg.m4vmv2.dao.VMDAOImplTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.844 s - in com.sg.m4vmv2.dao.VMDAOImplTest
