@@ -1,2 +1,2 @@
 # Vending-Machine
-Back end and front end exclusive versions of a vending machine application.
+Backend exclusive version using Spring Boot backend technologies, and a frontend exclusive version using jQuery and Bootstrap
